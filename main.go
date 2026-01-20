@@ -19,15 +19,19 @@ func initCmd() *cobra.Command {
 
 	rootCmd.PersistentFlags().StringVar(&ollamaAddress, "ollamaAddress", "http://localhost:11434", "Ollama server address")
 
+	var dataDir string
+	var chunkSize int
 	var indexCmd = &cobra.Command{
 		Use: "index",
 		Short: "Index the knowledge base",
 		Args: cobra.ExactArgs(0),
 		Run: func(cmd *cobra.Command, args []string) {
-			// TODO Rhydian point to knowledge base source
-			handlers.Index(ollamaAddress)
+			handlers.Index(ollamaAddress, dataDir, chunkSize)
 		},
 	}
+	indexCmd.Flags().StringVar(&dataDir, "dataDir", "", "Directory containing .txt files to index (required)")
+	indexCmd.Flags().IntVar(&chunkSize, "chunkSize", 1000, "Maximum chunk size in characters for splitting text")
+	indexCmd.MarkFlagRequired("dataDir")
 	rootCmd.AddCommand(indexCmd)
 
 	var searchCmd = &cobra.Command{

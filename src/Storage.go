@@ -138,6 +138,8 @@ func (storage *Storage) Search(searchTerm string) ([]*qdrant.ScoredPoint, error)
 		&qdrant.QueryPoints{
 			CollectionName: storage.collectionName,
 			Query:          query,
+			WithPayload:    qdrant.NewWithPayload(true),
+			Limit:          qdrant.PtrOf(uint64(10)),
 		},
 	)
 
