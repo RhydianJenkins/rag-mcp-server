@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	"github.com/qdrant/go-client/qdrant"
-	"github.com/rhydianjenkins/rag-mcp-server/src"
 	"github.com/rhydianjenkins/rag-mcp-server/src/config"
+	"github.com/rhydianjenkins/rag-mcp-server/src/storage"
 )
 
 func chunkText(text string, maxChunkSize int) []string {
@@ -71,7 +71,7 @@ func readTextFiles(dataDir string) (map[string]string, error) {
 // IndexFiles indexes files from a directory and returns structured results
 // This function is used by both CLI and MCP modes
 func IndexFiles(cfg *config.Config, dataDir string, chunkSize int) (*IndexResult, error) {
-	storage, err := src.Connect(cfg)
+	storage, err := storage.Connect(cfg)
 	if err != nil {
 		return &IndexResult{
 			Success: false,

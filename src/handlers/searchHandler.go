@@ -3,14 +3,14 @@ package handlers
 import (
 	"fmt"
 
-	"github.com/rhydianjenkins/rag-mcp-server/src"
 	"github.com/rhydianjenkins/rag-mcp-server/src/config"
+	"github.com/rhydianjenkins/rag-mcp-server/src/storage"
 )
 
 // SearchFiles performs a search and returns structured results
 // This function is used by both CLI and MCP modes
 func SearchFiles(cfg *config.Config, searchTerm string, limit int) (*SearchResults, error) {
-	storage, err := src.Connect(cfg)
+	storage, err := storage.Connect(cfg)
 	if err != nil {
 		return &SearchResults{
 			Success: false,

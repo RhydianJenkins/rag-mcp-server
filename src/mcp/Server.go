@@ -5,19 +5,19 @@ import (
 	"log"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
-	"github.com/rhydianjenkins/rag-mcp-server/src"
 	"github.com/rhydianjenkins/rag-mcp-server/src/config"
 	"github.com/rhydianjenkins/rag-mcp-server/src/handlers"
+	"github.com/rhydianjenkins/rag-mcp-server/src/storage"
 )
 
 type RAGServer struct {
 	config    *config.Config
 	mcpServer *mcp.Server
-	storage   *src.Storage
+	storage   *storage.Storage
 }
 
 func NewRAGServer(cfg *config.Config) (*RAGServer, error) {
-	storage, err := src.Connect(cfg)
+	storage, err := storage.Connect(cfg)
 	if err != nil {
 		return nil, err
 	}
