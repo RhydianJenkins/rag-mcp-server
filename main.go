@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 
+	"github.com/rhydianjenkins/rag-mcp-server/src/mcp"
 	"github.com/rhydianjenkins/rag-mcp-server/src/config"
 	"github.com/rhydianjenkins/rag-mcp-server/src/handlers"
 	"github.com/spf13/cobra"
@@ -75,7 +76,7 @@ func initCmd() *cobra.Command {
 				ServerVersion:  "1.0.0",
 			}
 
-			ragServer, err := NewRAGServer(cfg)
+			ragServer, err := mcp.NewRAGServer(cfg)
 			if err != nil {
 				log.Fatalf("Failed to create RAG server: %v", err)
 			}
