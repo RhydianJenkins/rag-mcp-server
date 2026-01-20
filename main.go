@@ -34,15 +34,17 @@ func initCmd() *cobra.Command {
 	indexCmd.MarkFlagRequired("dataDir")
 	rootCmd.AddCommand(indexCmd)
 
+	var limit int
 	var searchCmd = &cobra.Command{
 		Use: "search",
 		Short: "Search the knowledge base",
 		Args: cobra.ExactArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			searchTerm := args[0]
-			handlers.Search(searchTerm, ollamaAddress)
+			handlers.Search(searchTerm, ollamaAddress, limit)
 		},
 	}
+	searchCmd.Flags().IntVar(&limit, "limit", 3, "Maximum number of search results to return")
 	rootCmd.AddCommand(searchCmd)
 
 	var runCmd = &cobra.Command{

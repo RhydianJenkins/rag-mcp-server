@@ -124,7 +124,7 @@ func (storage *Storage) GenerateDb(points []*qdrant.PointStruct) error {
 	return nil
 }
 
-func (storage *Storage) Search(searchTerm string) ([]*qdrant.ScoredPoint, error) {
+func (storage *Storage) Search(searchTerm string, limit int) ([]*qdrant.ScoredPoint, error) {
 	embedding, err := storage.GetEmbedding(searchTerm)
 	if err != nil {
 		log.Printf("Failed to get embedding for search term: %v", err)
@@ -139,7 +139,7 @@ func (storage *Storage) Search(searchTerm string) ([]*qdrant.ScoredPoint, error)
 			CollectionName: storage.collectionName,
 			Query:          query,
 			WithPayload:    qdrant.NewWithPayload(true),
-			Limit:          qdrant.PtrOf(uint64(10)),
+			Limit:          qdrant.PtrOf(uint64(limit)),
 		},
 	)
 
