@@ -15,28 +15,29 @@ func Index() error {
 		return err;
 	}
 
+	vec1, _ := storage.GetEmbedding("eggs")
+	vec2, _ := storage.GetEmbedding("beef")
+	vec3, _ := storage.GetEmbedding("cheese")
+
 	points := []*qdrant.PointStruct{
 		{
 			Id:      qdrant.NewIDNum(1),
-			Vectors: qdrant.NewVectors(0.05, 0.61, 0.76, 0.74),
-			Payload: qdrant.NewValueMap(map[string]any{"city": "London"}),
+			Vectors: qdrant.NewVectors(vec1...),
 		},
 		{
 			Id:      qdrant.NewIDNum(2),
-			Vectors: qdrant.NewVectors(0.19, 0.81, 0.75, 0.11),
-			Payload: qdrant.NewValueMap(map[string]any{"age": 32}),
+			Vectors: qdrant.NewVectors(vec2...),
 		},
 		{
 			Id:      qdrant.NewIDNum(3),
-			Vectors: qdrant.NewVectors(0.36, 0.55, 0.47, 0.94),
-			Payload: qdrant.NewValueMap(map[string]any{"vegan": true}),
+			Vectors: qdrant.NewVectors(vec3...),
 		},
 	}
 
-	err = storage.Upsert(points);
+	err = storage.GenerateDb(points);
 
 	if err != nil {
-		log.Fatal("Unable to upsert");
+		log.Fatal("Unable to generate db");
 		return err;
 	}
 

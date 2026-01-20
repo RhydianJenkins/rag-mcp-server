@@ -1,21 +1,37 @@
 package src
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
+	"fmt"
+	"io"
 	"log"
+	"net/http"
 
 	"github.com/qdrant/go-client/qdrant"
 )
 
 type Storage struct {
-	client *qdrant.Client
+	client         *qdrant.Client
 	collectionName string
+	ollamaURL      string
+	vectorSize     uint64
+}
+
+type ollamaEmbedRequest struct {
+	Model  string `json:"model"`
+	Prompt string `json:"prompt"`
+}
+
+type ollamaEmbedResponse struct {
+	Embedding []float32 `json:"embedding"`
 }
 
 func Connect() (*Storage, error) {
 	client, err := qdrant.NewClient(&qdrant.Config{
-		Host: "localhost",
-		Port: 6334,
+		Host:   "localhost",
+		Port:   6334,
 		UseTLS: false,
 		// APIKey: "<your-api-key>",
 		// PoolSize: 3,
@@ -29,50 +45,105 @@ func Connect() (*Storage, error) {
 		return nil, err
 	}
 
-	storage := &Storage {
-		client: client,
+	storage := &Storage{
+		client:         client,
 		collectionName: "my_collection",
+		ollamaURL:      "http://localhost:11434",
+		vectorSize:     768, // for nomic-embed-text
 	}
 
 	return storage, nil
 }
 
-func (storage *Storage) Upsert(points []*qdrant.PointStruct) (error) {
+func (storage *Storage) GetEmbedding(text string) ([]float32, error) {
+	reqBody := ollamaEmbedRequest{
+		Model:  "nomic-embed-text",
+		Prompt: text,
+	}
+
+	jsonData, err := json.Marshal(reqBody)
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal request: %w", err)
+	}
+
+	resp, err := http.Post(
+		storage.ollamaURL+"/api/embeddings",
+		"application/json",
+		bytes.NewBuffer(jsonData),
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to call Ollama API: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		body, _ := io.ReadAll(resp.Body)
+		return nil, fmt.Errorf("Ollama API returned status %d: %s", resp.StatusCode, string(body))
+	}
+
+	var embedResp ollamaEmbedResponse
+	if err := json.NewDecoder(resp.Body).Decode(&embedResp); err != nil {
+		return nil, fmt.Errorf("failed to decode response: %w", err)
+	}
+
+	return embedResp.Embedding, nil
+}
+
+func (storage *Storage) GenerateDb(points []*qdrant.PointStruct) error {
+	exists, err := storage.client.CollectionExists(context.Background(), storage.collectionName)
+
+	if err != nil {
+		log.Fatal("Unable to check if collection exists")
+		return err
+	}
+
+	if exists {
+		storage.client.DeleteCollection(context.Background(), storage.collectionName)
+	}
+
 	storage.client.CreateCollection(context.Background(), &qdrant.CreateCollection{
 		CollectionName: storage.collectionName,
 		VectorsConfig: qdrant.NewVectorsConfig(&qdrant.VectorParams{
-			Size:     4,
+			Size:     storage.vectorSize,
 			Distance: qdrant.Distance_Cosine,
 		}),
 	})
 
 	operationInfo, err := storage.client.Upsert(context.Background(), &qdrant.UpsertPoints{
 		CollectionName: storage.collectionName,
-		Points: points,
+		Points:         points,
 	})
 
 	if err != nil {
-		log.Fatal("Unable to upsert");
-		return err;
+		log.Fatal("Unable to upsert")
+		return err
 	}
 
 	log.Println("qdrant upsert result", operationInfo)
 
-	return nil;
+	return nil
 }
 
 func (storage *Storage) Search(searchTerm string) ([]*qdrant.ScoredPoint, error) {
-	// TODO Rhydian convert search term into vector to query
-	query := qdrant.NewQuery(0.5, 0.2, 0.1, 0.2)
+	embedding, err := storage.GetEmbedding(searchTerm)
+	if err != nil {
+		log.Printf("Failed to get embedding for search term: %v", err)
+		return nil, fmt.Errorf("failed to get embedding: %w", err)
+	}
 
-	searchResult, err := storage.client.Query(context.Background(), &qdrant.QueryPoints{
-		CollectionName: storage.collectionName,
-		Query:          query,
-	})
+	query := qdrant.NewQuery(embedding...)
+
+	searchResult, err := storage.client.Query(
+		context.Background(),
+		&qdrant.QueryPoints{
+			CollectionName: storage.collectionName,
+			Query:          query,
+		},
+	)
 
 	if err != nil {
-		log.Fatal("Unable to search for term")
-		return nil, err
+		log.Printf("Unable to search for term: %v", err)
+		return nil, fmt.Errorf("search failed: %w", err)
 	}
 
 	return searchResult, nil
