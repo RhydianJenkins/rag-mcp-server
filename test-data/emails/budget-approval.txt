@@ -1,0 +1,21 @@
+Subject: Re: Budget Approval for New Infrastructure
+From: James Chen <james.chen@company.com>
+To: Sarah Mitchell <sarah.mitchell@company.com>
+Date: January 12, 2026
+
+Sarah,
+
+Good news! The finance committee has approved the budget request for the new cloud infrastructure. We have $150,000 allocated for Q1-Q2.
+
+Here's the breakdown:
+- AWS services: $80,000
+- Monitoring tools: $25,000
+- Database licenses: $30,000
+- Contingency: $15,000
+
+Please work with procurement to get the necessary vendor contracts in place. We'll need to have everything set up by March 1st to stay on schedule.
+
+Let me know if you need any clarification on the budget allocations.
+
+Best,
+James

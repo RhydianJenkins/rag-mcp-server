@@ -1,0 +1,20 @@
+Subject: Out of Office - Jan 25-30
+From: Maria Garcia <maria.garcia@company.com>
+To: Engineering Team <eng-team@company.com>
+Date: January 14, 2026
+
+Hi everyone,
+
+Just a heads up that I'll be out of office from January 25th through January 30th for a family vacation. I'll have limited access to email and Slack.
+
+If you need urgent assistance with:
+- Authentication service issues: Contact Alex Kumar
+- API gateway problems: Contact David Park
+- General infrastructure questions: Contact Sarah Mitchell
+
+I've made sure all my current tasks are either completed or have clear handoff notes in JIRA. The OAuth migration work is on track and doesn't need any intervention while I'm away.
+
+I'll be back in the office on January 31st and will catch up on emails then.
+
+Thanks,
+Maria

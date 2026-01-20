@@ -1,0 +1,26 @@
+Subject: Database Migration Strategy Discussion
+From: Alex Kumar <alex.kumar@company.com>
+To: Engineering Team <eng-team@company.com>
+Date: January 18, 2026
+
+Hey everyone,
+
+I've been researching our database migration from PostgreSQL to a distributed setup, and I wanted to share my findings and get your feedback.
+
+Current Issues:
+- Query performance degrading with dataset size
+- Single point of failure concerns
+- Scaling limitations for read-heavy workloads
+
+Proposed Solutions:
+1. Implement read replicas for better load distribution
+2. Consider sharding for horizontal scalability
+3. Evaluate CockroachDB or YugabyteDB for distributed SQL
+
+I think option 1 is the quickest win and buys us time to properly evaluate option 3. Option 2 would require significant application changes.
+
+I've prepared a detailed technical document comparing the approaches. Let's discuss this in our architecture review meeting next Tuesday.
+
+Thoughts? Any other approaches we should consider?
+
+Alex

@@ -1,0 +1,36 @@
+Subject: Critical Bug in Payment Processing
+From: David Park <david.park@company.com>
+To: Engineering Team <eng-team@company.com>
+Date: January 19, 2026
+
+URGENT - Critical Bug
+
+We've identified a critical bug in the payment processing system that's affecting approximately 5% of transactions.
+
+Symptoms:
+- Payment confirmation emails not being sent
+- Transactions showing as "pending" indefinitely
+- Users being charged but orders not being fulfilled
+
+Impact:
+- ~50 affected customers in the last 24 hours
+- Customer support receiving numerous complaints
+- Potential revenue loss and reputation damage
+
+Root Cause Analysis:
+After investigating, it appears the issue is related to the recent deployment on January 17th. The new retry logic in the payment webhook handler is causing race conditions.
+
+Immediate Actions Taken:
+- Rolled back the deployment to previous stable version
+- Manually processed affected orders
+- Sent apology emails to impacted customers
+
+We need to:
+1. Fix the race condition in the webhook handler
+2. Add better error handling and logging
+3. Implement monitoring alerts for stuck transactions
+4. Review our deployment process to prevent this
+
+I've created ticket ENG-1547 to track this work. Let's prioritize this for the current sprint.
+
+David

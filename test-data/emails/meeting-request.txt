@@ -1,0 +1,27 @@
+Subject: Meeting Request - Security Audit Findings
+From: Lisa Thompson <lisa.thompson@company.com>
+To: Engineering Team <eng-team@company.com>
+Cc: CISO <ciso@company.com>
+Date: January 16, 2026
+
+Team,
+
+Our external security audit has been completed and we need to review the findings together. I'm scheduling a mandatory meeting for all senior engineers.
+
+Meeting Details:
+- Date: January 23, 2026
+- Time: 10:00 AM - 12:00 PM
+- Location: Conference Room B / Zoom link will be sent
+- Agenda: Review of critical and high-priority vulnerabilities
+
+Critical items that need immediate attention:
+- SQL injection vulnerabilities in the reporting module
+- Outdated dependencies with known CVEs
+- Missing authentication on several API endpoints
+
+Please block this time on your calendars. We'll need to create an action plan with ownership and timelines during this meeting.
+
+Security is our top priority, and we need to address these issues before our next release.
+
+Lisa Thompson
+Director of Engineering

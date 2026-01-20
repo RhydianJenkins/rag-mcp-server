@@ -1,0 +1,20 @@
+Subject: Q1 Project Deadline - Action Required
+From: Sarah Mitchell <sarah.mitchell@company.com>
+To: Engineering Team <eng-team@company.com>
+Date: January 15, 2026
+
+Hi Team,
+
+I wanted to send a quick reminder about our Q1 project deadline coming up on February 28th. We're currently tracking well, but there are a few areas that need attention.
+
+Outstanding Items:
+- API documentation needs to be completed by Feb 10th
+- Performance testing should wrap up by Feb 15th
+- User acceptance testing scheduled for Feb 20-25th
+
+Please review your assigned tasks in JIRA and update the status. If you're blocked on anything or foresee any delays, let me know ASAP so we can adjust resources.
+
+Also, reminder that we have our sprint review this Friday at 2 PM. Please come prepared to discuss your progress.
+
+Thanks,
+Sarah
