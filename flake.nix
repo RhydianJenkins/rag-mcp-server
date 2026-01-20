@@ -19,11 +19,15 @@
             gotools
             go-tools
             golangci-lint
+            qdrant
           ];
 
           shellHook = ''
             echo "RAG MCP Server development environment"
             echo "Go version: $(go version)"
+            echo "Qdrant version: $(qdrant --version)"
+            echo ""
+            echo "To start Qdrant server, run: qdrant"
           '';
         };
       }
