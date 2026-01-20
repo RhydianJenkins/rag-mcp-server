@@ -8,6 +8,8 @@ import (
 )
 
 func initCmd() *cobra.Command {
+	var ollamaAddress string
+
 	var rootCmd = &cobra.Command{
 		Short: "RAG MCP Server",
 		Run: func(cmd *cobra.Command, args []string) {
@@ -15,13 +17,15 @@ func initCmd() *cobra.Command {
 		},
 	}
 
+	rootCmd.PersistentFlags().StringVar(&ollamaAddress, "ollamaAddress", "http://localhost:11434", "Ollama server address")
+
 	var indexCmd = &cobra.Command{
 		Use: "index",
 		Short: "Index the knowledge base",
 		Args: cobra.ExactArgs(0),
 		Run: func(cmd *cobra.Command, args []string) {
 			// TODO Rhydian point to knowledge base source
-			handlers.Index()
+			handlers.Index(ollamaAddress)
 		},
 	}
 	rootCmd.AddCommand(indexCmd)
@@ -32,7 +36,7 @@ func initCmd() *cobra.Command {
 		Args: cobra.ExactArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			searchTerm := args[0]
-			handlers.Search(searchTerm)
+			handlers.Search(searchTerm, ollamaAddress)
 		},
 	}
 	rootCmd.AddCommand(searchCmd)

@@ -28,7 +28,7 @@ type ollamaEmbedResponse struct {
 	Embedding []float32 `json:"embedding"`
 }
 
-func Connect() (*Storage, error) {
+func Connect(ollamaURL string) (*Storage, error) {
 	client, err := qdrant.NewClient(&qdrant.Config{
 		Host:   "localhost",
 		Port:   6334,
@@ -48,7 +48,7 @@ func Connect() (*Storage, error) {
 	storage := &Storage{
 		client:         client,
 		collectionName: "my_collection",
-		ollamaURL:      "http://localhost:11434",
+		ollamaURL:      ollamaURL,
 		vectorSize:     768, // for nomic-embed-text
 	}
 

@@ -6,8 +6,8 @@ import (
 	"github.com/rhydianjenkins/rag-mcp-server/src"
 )
 
-func Search(searchTerm string) error {
-	storage, err := src.Connect()
+func Search(searchTerm string, ollamaURL string) error {
+	storage, err := src.Connect(ollamaURL)
 
 	if err != nil {
 		return err;
