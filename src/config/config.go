@@ -21,7 +21,7 @@ func DefaultConfig() *Config {
 		QdrantPort:     6334,
 		QdrantUseTLS:   false,
 		ServerName:     "rag-mcp-server",
-		ServerVersion:  "1.0.0",
+		ServerVersion:  "dev",
 		VectorSize:     768,
 	}
 }

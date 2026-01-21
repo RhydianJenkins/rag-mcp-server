@@ -22,7 +22,7 @@ func TestDefaultConfig(t *testing.T) {
 		{"OllamaURL", cfg.OllamaURL, "http://localhost:11434"},
 		{"EmbeddingModel", cfg.EmbeddingModel, "nomic-embed-text"},
 		{"ServerName", cfg.ServerName, "rag-mcp-server"},
-		{"ServerVersion", cfg.ServerVersion, "1.0.0"},
+		{"ServerVersion", cfg.ServerVersion, "dev"},
 	}
 
 	for _, tt := range tests {
