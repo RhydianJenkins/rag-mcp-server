@@ -1,3 +1,4 @@
+.mcp.json
 .qdrant-initialized
 rag-mcp-server
 rag-mcp-server.log
