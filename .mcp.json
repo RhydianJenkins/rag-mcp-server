@@ -1,9 +1,0 @@
-{
-  "mcpServers": {
-    "rag-server": {
-      "command": "/home/rhydian/code/rag-mcp-server/rag-mcp-server",
-      "args": ["run"],
-      "env": {}
-    }
-  }
-}
