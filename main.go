@@ -28,6 +28,15 @@ func initCmd() *cobra.Command {
 
 	var rootCmd = &cobra.Command{
 		Short: "RAG MCP Server",
+		PersistentPreRun: func(cmd *cobra.Command, args []string) {
+			config.Initialize(&config.Config{
+				CollectionName: collectionName,
+				OllamaURL:      ollamaAddress,
+				QdrantHost:     qdrantHost,
+				QdrantPort:     qdrantPort,
+				ServerVersion:  strings.TrimSpace(version),
+			})
+		},
 		Run: func(cmd *cobra.Command, args []string) {
 			cmd.Help()
 		},
@@ -45,12 +54,6 @@ func initCmd() *cobra.Command {
 		Short: "Index the knowledge base",
 		Args:  cobra.ExactArgs(0),
 		Run: func(cmd *cobra.Command, args []string) {
-			config.Initialize(&config.Config{
-				OllamaURL:      ollamaAddress,
-				QdrantHost:     qdrantHost,
-				QdrantPort:     qdrantPort,
-				CollectionName: collectionName,
-			})
 			handlers.Index(dataDir, chunkSize)
 		},
 	}
@@ -65,12 +68,6 @@ func initCmd() *cobra.Command {
 		Short: "Search the knowledge base",
 		Args:  cobra.ExactArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
-			config.Initialize(&config.Config{
-				OllamaURL:      ollamaAddress,
-				QdrantHost:     qdrantHost,
-				QdrantPort:     qdrantPort,
-				CollectionName: collectionName,
-			})
 			searchTerm := args[0]
 			handlers.Search(searchTerm, limit)
 		},
@@ -100,14 +97,6 @@ func initCmd() *cobra.Command {
 			}
 			defer logFile.Close()
 			log.SetOutput(logFile)
-
-			config.Initialize(&config.Config{
-				QdrantHost:     qdrantHost,
-				QdrantPort:     qdrantPort,
-				CollectionName: collectionName,
-				OllamaURL:      ollamaAddress,
-				ServerVersion:  strings.TrimSpace(version),
-			})
 
 			ragServer, err := mcp.NewRAGServer()
 			if err != nil {
