@@ -7,8 +7,6 @@ import (
 	"github.com/rhydianjenkins/rag-mcp-server/src/storage"
 )
 
-// SearchFiles performs a search and returns structured results
-// This function is used by both CLI and MCP modes
 func SearchFiles(cfg *config.Config, searchTerm string, limit int) (*SearchResults, error) {
 	storage, err := storage.Connect(cfg)
 	if err != nil {
@@ -56,7 +54,6 @@ func SearchFiles(cfg *config.Config, searchTerm string, limit int) (*SearchResul
 	return results, nil
 }
 
-// Search is the CLI wrapper for backward compatibility
 func Search(searchTerm string, ollamaURL string, limit int) error {
 	cfg := config.DefaultConfig()
 	cfg.OllamaURL = ollamaURL
@@ -66,7 +63,6 @@ func Search(searchTerm string, ollamaURL string, limit int) error {
 		return err
 	}
 
-	// Pretty print for CLI users
 	fmt.Printf("\nSearch results for: '%s'\n", results.Query)
 	fmt.Printf("Found %d results:\n", results.Count)
 

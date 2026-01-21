@@ -2,13 +2,21 @@ package main
 
 import (
 	"context"
+	_ "embed"
+	"fmt"
 	"log"
+	"os"
+	"strings"
 
-	"github.com/rhydianjenkins/rag-mcp-server/src/mcp"
 	"github.com/rhydianjenkins/rag-mcp-server/src/config"
 	"github.com/rhydianjenkins/rag-mcp-server/src/handlers"
+	"github.com/rhydianjenkins/rag-mcp-server/src/mcp"
 	"github.com/spf13/cobra"
 )
+
+//go:embed VERSION
+var version string
+var logfile = "rag-mcp-server.log"
 
 func initCmd() *cobra.Command {
 	var (
@@ -58,12 +66,29 @@ func initCmd() *cobra.Command {
 	searchCmd.Flags().IntVar(&limit, "limit", 3, "Maximum number of search results to return")
 	rootCmd.AddCommand(searchCmd)
 
+	var versionCmd = &cobra.Command{
+		Use:   "version",
+		Short: "Print the version number",
+		Args:  cobra.ExactArgs(0),
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Print(strings.TrimSpace(version))
+		},
+	}
+	rootCmd.AddCommand(versionCmd)
+
 	var runCmd = &cobra.Command{
 		Use:   "run",
 		Short: "Run the MCP server over stdio",
 		Long:  "Starts the MCP server using stdio transport for integration with MCP clients",
 		Args:  cobra.ExactArgs(0),
 		Run: func(cmd *cobra.Command, args []string) {
+			logFile, err := os.OpenFile(logfile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+			if err != nil {
+				log.Fatalf("Failed to open log file: %v", err)
+			}
+			defer logFile.Close()
+			log.SetOutput(logFile)
+
 			cfg := &config.Config{
 				QdrantHost:     qdrantHost,
 				QdrantPort:     qdrantPort,
@@ -73,7 +98,7 @@ func initCmd() *cobra.Command {
 				OllamaURL:      ollamaAddress,
 				EmbeddingModel: "nomic-embed-text",
 				ServerName:     "rag-mcp-server",
-				ServerVersion:  "1.0.0",
+				ServerVersion:  strings.TrimSpace(version),
 			}
 
 			ragServer, err := mcp.NewRAGServer(cfg)

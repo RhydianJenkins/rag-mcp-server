@@ -68,8 +68,6 @@ func readTextFiles(dataDir string) (map[string]string, error) {
 	return files, err
 }
 
-// IndexFiles indexes files from a directory and returns structured results
-// This function is used by both CLI and MCP modes
 func IndexFiles(cfg *config.Config, dataDir string, chunkSize int) (*IndexResult, error) {
 	storage, err := storage.Connect(cfg)
 	if err != nil {
@@ -147,7 +145,6 @@ func IndexFiles(cfg *config.Config, dataDir string, chunkSize int) (*IndexResult
 	}, nil
 }
 
-// Index is the CLI wrapper for backward compatibility
 func Index(ollamaURL string, dataDir string, chunkSize int) error {
 	cfg := config.DefaultConfig()
 	cfg.OllamaURL = ollamaURL

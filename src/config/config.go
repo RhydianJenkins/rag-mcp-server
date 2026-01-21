@@ -1,34 +1,27 @@
 package config
 
 type Config struct {
-	// Qdrant Configuration
-	QdrantHost   string
-	QdrantPort   int
-	QdrantUseTLS bool
-
-	// Collection Configuration
 	CollectionName string
-	VectorSize     uint64
-
-	// Ollama Configuration
-	OllamaURL      string
 	EmbeddingModel string
-
-	// MCP Server Configuration
-	ServerName    string
-	ServerVersion string
+	OllamaURL      string
+	QdrantHost     string
+	QdrantPort     int
+	QdrantUseTLS   bool
+	ServerName     string
+	ServerVersion  string
+	VectorSize     uint64
 }
 
 func DefaultConfig() *Config {
 	return &Config{
+		CollectionName: "my_collection",
+		EmbeddingModel: "nomic-embed-text",
+		OllamaURL:      "http://localhost:11434",
 		QdrantHost:     "localhost",
 		QdrantPort:     6334,
 		QdrantUseTLS:   false,
-		CollectionName: "my_collection",
-		VectorSize:     768,
-		OllamaURL:      "http://localhost:11434",
-		EmbeddingModel: "nomic-embed-text",
 		ServerName:     "rag-mcp-server",
 		ServerVersion:  "1.0.0",
+		VectorSize:     768,
 	}
 }
