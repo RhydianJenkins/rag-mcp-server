@@ -1,0 +1,19 @@
+Subject: Thoughts on the redesign and some other stuff
+From: Patricia Wong <patricia.wong@company.com>
+To: Design Team <design@company.com>, Product Team <product@company.com>
+Date: January 19, 2026
+
+Hi everyone,
+
+So I've been thinking about the dashboard redesign we discussed last week, and I have some thoughts. First off, I really like where we're going with the new color scheme - the blues and grays feel much more professional than what we had before. My only concern is accessibility, we should probably run it through a contrast checker before we commit.
+
+Anyway, I was talking to Janet from sales yesterday (completely unrelated, we were getting coffee) and she mentioned that three of her biggest clients have been asking about dark mode. She didn't even know we were working on it! But apparently it's becoming a real sticking point in renewals. One client, I think she said it was Acme Corp or maybe it was Apex Industries, anyway they're threatening to churn if we don't have it by Q2. Their whole team works late nights and apparently our bright white interface is killing them.
+
+Oh, and while I'm thinking about it - the user testing sessions we did on Tuesday went pretty well overall. Most people found the new navigation intuitive, though there was this one guy who kept clicking on the logo expecting it to open a menu. Might be an outlier but worth noting. The thing that surprised me most was how many people immediately noticed the improved load times. We shaved off what, like 2 seconds? But everyone commented on it. Really validates all that optimization work the eng team did.
+
+I'm attaching the full report from the sessions but honestly it's like 40 pages and I know nobody's going to read it. The TL;DR is: people love it, ship it, but maybe add some onboarding tooltips for the new features.
+
+One last thing before I forget - we need to update all the screenshots in the help docs before launch. I started a spreadsheet to track which ones need updating but I'm only about halfway through. If anyone has some free cycles this week that would be amazing.
+
+Talk soon,
+Patricia

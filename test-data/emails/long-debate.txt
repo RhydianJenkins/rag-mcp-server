@@ -1,0 +1,22 @@
+Subject: Re: Re: Re: Should we use GraphQL or REST for the new API?
+From: Monica Patel <monica.patel@company.com>
+To: Architecture Team <arch@company.com>
+Date: January 16, 2026
+
+I've been following this thread and honestly I think we're overthinking this. Let me just lay out my perspective after having worked with both extensively at my previous company.
+
+GraphQL sounds great on paper - you get exactly the data you need, no over-fetching, strong typing, all that good stuff. And yeah, our mobile team would probably love it because they could optimize their queries for different screen sizes and connection speeds. I get the appeal, I really do.
+
+But here's the thing - we don't have the infrastructure in place to do GraphQL well. We'd need to build out all the resolvers, figure out N+1 query problems, implement proper caching (which is way more complex with GraphQL), handle authentication and authorization at the field level, and then there's the whole monitoring and debugging aspect. With REST we can just use nginx logs and see exactly what's happening. With GraphQL, everything's a POST request to /graphql so you need specialized tools.
+
+I did some back-of-napkin math and I think implementing GraphQL properly would take our team at least 3 months, maybe 4. That's assuming we don't hit any major roadblocks. And during that time we're not shipping features that customers are actually asking for. Is it worth it? I mean, maybe? If we were building a really complex data model with lots of relationships and our clients needed really flexible querying, then absolutely. But we're mostly doing CRUD operations on relatively simple entities.
+
+Also - and I hate to be that person - but who's going to maintain this? Our backend team is already stretched thin. Carlos is the only one who's even used GraphQL before and he's supposedly moving to the platform team next quarter. We'd basically be taking on technical debt in the form of a technology nobody on the team is comfortable with.
+
+That said, I'm not completely against it. If we want to future-proof and we think the API is going to get way more complex over time, then maybe it's worth the investment. But we should go in with eyes wide open about what we're committing to.
+
+My vote would be to start with REST because we know it, we have tooling for it, and we can ship faster. Then if we hit limitations down the road, we can always add a GraphQL layer on top. It's easier to go from REST to GraphQL than the other way around.
+
+But I'm just one voice here. What does everyone else think?
+
+Monica

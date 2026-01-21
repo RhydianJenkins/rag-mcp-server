@@ -1,0 +1,19 @@
+Subject: DataPro Analytics - they're raising prices AGAIN
+From: Finance Team <finance@company.com>
+To: Engineering Leadership <eng-leadership@company.com>, CTO <cto@company.com>
+Date: January 17, 2026
+
+Hi folks,
+
+Just got off a call with our account rep at DataPro Analytics and wanted to loop you in on some concerning news. They're increasing prices by 40% starting March 1st. Our annual bill would go from $85K to $119K which is... not great, especially since we just budgeted for the year.
+
+I pushed back pretty hard but apparently this is happening across the board for all their customers. They cited "increased infrastructure costs and enhanced AI capabilities" but between you and me I think they're just trying to pump up revenue before their IPO.
+
+The contract renewal is coming up in April so we have some time to figure this out. I know we use DataPro for customer analytics, usage tracking, and some of the reporting features in the admin dashboard. Do we have any alternatives we could switch to? Or could we build some of this in-house?
+
+I'm happy to set up a meeting to discuss options. We could negotiate with them, look at competitors, or evaluate the build vs buy tradeoff. But we need to decide something in the next few weeks because they want an answer by mid-February.
+
+Let me know your thoughts.
+
+Brian
+Finance Director

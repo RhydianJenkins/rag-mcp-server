@@ -1,0 +1,16 @@
+Subject: heads up about the intern thing
+From: Rebecca Cole <rebecca.cole@company.com>
+To: sarah.chen@company.com
+Date: January 15, 2026
+
+hey sarah,
+
+just wanted to give you a heads up that i got an email from HR saying we're getting 2 interns this summer (june through august). they're both computer science students from berkeley, one is interested in frontend and the other wants to do backend/infrastructure stuff.
+
+i haven't met them yet but apparently they're both pretty strong - the backend one has contributed to kubernetes and the frontend one built some popular react component library that has like 5k stars or something.
+
+anyway, we should probably start thinking about projects for them. i remember last summer our interns kind of just floundered around because we didn't have anything scoped out ahead of time. maybe we could have them work on that developer tools project that keeps getting pushed back? or the API documentation site redesign?
+
+let me know when you have a minute to chat about it. no rush, just wanted to plant the seed since june will be here before we know it.
+
+-rebecca

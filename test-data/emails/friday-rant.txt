@@ -1,0 +1,20 @@
+Subject: Can we talk about the build times?
+From: Dev Singh <dev.singh@company.com>
+To: Engineering Team <eng-team@company.com>
+Date: January 18, 2026
+
+Okay so I know it's Friday afternoon and nobody wants to hear me complain but seriously, our CI/CD pipeline is getting out of control. I just pushed a tiny CSS fix, literally changing one color value, and it took 47 minutes to deploy to staging. FORTY SEVEN MINUTES.
+
+I remember when we first set this up it was like 8 minutes end to end. Now we're running the entire test suite for every single commit, including those integration tests that test things that haven't changed in 6 months. And don't even get me started on the Docker image builds - I'm pretty sure we're not caching layers properly because I see it reinstalling the same npm packages every single time.
+
+I did some digging (because what else am I going to do while waiting for my build) and I think the main culprits are:
+- We're not using any caching in the test step
+- The linter is running against all files instead of just changed ones
+- Something is wrong with the Docker layer caching, everything rebuilds from scratch
+- We added that security scan in December that takes 12 minutes by itself
+
+I know we're all busy with the Q1 features but this is seriously impacting productivity. I waste probably 2-3 hours a day just waiting for builds. We should dedicate a sprint to this or at least have a few people spend some time optimizing it.
+
+Just needed to get that off my chest. Hope everyone has a good weekend.
+
+-Dev

@@ -1,0 +1,8 @@
+Subject: FYI - Database readonly mode tonight
+From: ops@company.com
+To: eng-team@company.com
+Date: January 20, 2026
+
+Team - putting the prod DB in readonly from 11pm-11:30pm tonight while we apply indexes. Apps will still work but writes will fail.
+
+-Ops

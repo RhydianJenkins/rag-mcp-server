@@ -1,0 +1,8 @@
+Subject: Re: API change
+From: Tom <tom.rivera@company.com>
+To: Dev Team <dev@company.com>
+Date: January 21, 2026
+
+Hey - did anyone else notice the auth endpoint is now returning 401s for valid tokens? Started happening around noon today. I'm guessing something got deployed but I don't see anything in the changelog.
+
+Tom

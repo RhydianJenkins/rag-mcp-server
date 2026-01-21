@@ -1,0 +1,20 @@
+Subject: Found something weird in the logs
+From: Tyler Kim <tyler.kim@company.com>
+To: Security Team <security@company.com>
+Date: January 20, 2026
+
+Hey security team,
+
+So this is probably nothing but I figured I should report it just in case. I was debugging a performance issue this morning and noticed some really strange patterns in our application logs from last night around 2-3am.
+
+There were like hundreds of login attempts from the same IP address - 203.45.67.89 - trying different username combinations. Most of them were generic stuff like admin, root, test, etc. but a few were actual employee usernames which is what made me suspicious. None of them succeeded (thank god for 2FA) but it definitely looks like someone was trying to brute force their way in.
+
+The attempts stopped around 3:15am and haven't resumed. I checked the IP and it's from somewhere in Eastern Europe based on the WHOIS lookup I did.
+
+I already blocked the IP in our firewall but I'm wondering if we should be doing something else? Should we force password resets for the accounts that were targeted? Alert those employees? File some kind of incident report?
+
+Also, our login rate limiting clearly didn't kick in since these attempts kept going for over an hour. Might be worth looking into why that didn't work as expected.
+
+Let me know what you want me to do with this.
+
+Tyler
