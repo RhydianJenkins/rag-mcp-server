@@ -12,65 +12,82 @@ This is an early prototype and breaking changes are likely.
 
 # Getting Started
 
+<details>
+<summary>Install with Nix</summary>
+
+Install the binary to your system:
 ```sh
-git clone git@github.com:rhydianjenkins/seek && cd seek
+nix profile install github:rhydianjenkins/seek
+seek --help
 ```
 
-## then build from source
+Or use without installing:
+```sh
+# Run directly without installing
+nix run github:rhydianjenkins/seek -- --help
+
+# Temporary shell with seek available
+nix shell github:rhydianjenkins/seek
+seek --help
+```
+
+Start the required services (Ollama and Qdrant):
+```sh
+nix run github:rhydianjenkins/seek#start-services
+
+# Or you can bring your own services
+seek --ollamaHost your.ollama.host \
+    --ollamaPort 11434 \
+    --qdrantHost your.qdrant.host \
+    --qdrantPort 6334 \
+    --dataDir test-data \
+    [command]
+```
+
+</details>
+
+<details>
+<summary>Build from Source</summary>
 
 ```sh
+git clone git@github.com:rhydianjenkins/seek
+cd seek
 go build
-
-# show --help
-./seek
+./seek --help
 ```
 
-## or with Nix
-
-```sh
-# start ollama and qdrant services
-nix run .#start-services
-
-# generate test embeddings
-nix run . -- embed --dataDir test-data
-
-# search for relevant documents
-nix run . -- search "deadlines urgent fixes needed"
-
-# or run the MCP server
-nix run . -- mcp
-```
+</details>
 
 ## Commands
 
 ### Embed Documents
 Generate embeddings for all documents in a directory:
 ```sh
-./seek embed --dataDir test-data --chunkSize 1000
+seek embed --dataDir test-data --chunkSize 1000
 ```
 
 ### Search Knowledge Base
 Search for documents using natural language:
 ```sh
-./seek search "What is important for me to do this week?" --limit 3
+seek search "What is important for me to do this week?" --limit 3
 ```
 
 ### Get Document
 Retrieve a complete document by filename:
 ```sh
-./seek get "document.txt"
+seek get "document.txt"
 ```
 
 ### Check Status
 View the status of your knowledge base:
 ```sh
-./seek status
+seek status
 ```
 
 ### Run MCP Server
 Start the MCP server for integration with MCP clients:
 ```sh
-./seek mcp
+seek mcp
 ```
 
 ## MCP Tools
