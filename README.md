@@ -31,7 +31,7 @@ nix shell github:rhydianjenkins/seek
 seek --help
 ```
 
-Start the required services (Ollama and Qdrant):
+Start the required services ([Ollama](https://ollama.com) and [Qdrant](https://qdrant.tech)):
 ```sh
 nix run github:rhydianjenkins/seek#start-services
 
