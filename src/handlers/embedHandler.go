@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/qdrant/go-client/qdrant"
 	"github.com/rhydianjenkins/seek/src/db"
@@ -67,7 +68,7 @@ func readTextFiles(dataDir string) (map[string]string, error) {
 	return files, err
 }
 
-func IndexFiles(dataDir string, chunkSize int) (*IndexResult, error) {
+func IndexFilesWithProgress(dataDir string, chunkSize int, progressCallback ProgressCallback) (*IndexResult, error) {
 	storage, err := db.Connect()
 	if err != nil {
 		return &IndexResult{
@@ -94,7 +95,15 @@ func IndexFiles(dataDir string, chunkSize int) (*IndexResult, error) {
 	var points []*qdrant.PointStruct
 	pointID := uint64(1)
 
+	totalFiles := len(files)
+	currentFile := 0
+
 	for filename, content := range files {
+		currentFile++
+		if progressCallback != nil {
+			progressCallback(currentFile, totalFiles, filename)
+		}
+
 		chunks := chunkText(content, chunkSize)
 
 		for chunkIdx, chunk := range chunks {
@@ -104,7 +113,7 @@ func IndexFiles(dataDir string, chunkSize int) (*IndexResult, error) {
 				continue
 			}
 
-			payload := map[string]interface{}{
+			payload := map[string]any{
 				"filename":    filename,
 				"chunk_index": chunkIdx,
 				"content":     chunk,
@@ -144,15 +153,62 @@ func IndexFiles(dataDir string, chunkSize int) (*IndexResult, error) {
 	}, nil
 }
 
-func Index(dataDir string, chunkSize int) error {
-	log.Printf("Found files to index (chunk size: %d chars)", chunkSize)
+// IndexFiles is a wrapper for backwards compatibility (used by MCP server)
+func IndexFiles(dataDir string, chunkSize int) (*IndexResult, error) {
+	return IndexFilesWithProgress(dataDir, chunkSize, nil)
+}
 
-	result, err := IndexFiles(dataDir, chunkSize)
+func Index(dataDir string, chunkSize int) error {
+	fmt.Printf("Starting indexing (chunk size: %d chars)\n", chunkSize)
+
+	startTime := time.Now()
+	var lastUpdate time.Time
+
+	progressCallback := func(current, total int, filename string) {
+		now := time.Now()
+		if now.Sub(lastUpdate) < 100*time.Millisecond && current != total {
+			return
+		}
+		lastUpdate = now
+
+		percent := float64(current) / float64(total) * 100
+		barWidth := 40
+		filled := int(float64(barWidth) * float64(current) / float64(total))
+
+		var bar strings.Builder
+
+		bar.WriteString("[")
+		for i := range barWidth {
+			if i < filled {
+				bar.WriteString("=")
+			} else if i == filled {
+				bar.WriteString(">")
+			} else {
+				bar.WriteString(" ")
+			}
+		}
+		bar.WriteString("]")
+
+		displayName := filename
+		if len(displayName) > 30 {
+			displayName = "..." + displayName[len(displayName)-27:]
+		}
+
+		fmt.Printf("\r%s %3.0f%% (%d/%d) Processing: %-30s", bar.String(), percent, current, total, displayName)
+
+		if current == total {
+			fmt.Println()
+		}
+	}
+
+	result, err := IndexFilesWithProgress(dataDir, chunkSize, progressCallback)
 	if err != nil {
-		log.Fatal(result.Error)
+		fmt.Printf("\nError: %s\n", result.Error)
 		return err
 	}
 
-	log.Printf("%s", result.Message)
+	elapsed := time.Since(startTime)
+	fmt.Printf("\n%s\n", result.Message)
+	fmt.Printf("Completed in %.2f seconds\n", elapsed.Seconds())
 	return nil
 }

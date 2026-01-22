@@ -1,5 +1,7 @@
 package handlers
 
+type ProgressCallback func(current, total int, filename string)
+
 type IndexResult struct {
 	Success      bool   `json:"success"`
 	FilesIndexed int    `json:"files_indexed"`
