@@ -1,0 +1,34 @@
+Subject: Q4 Performance Review - Great Work!
+From: Rachel Santos <rachel.santos@company.com>
+To: Alex Kim <alex.kim@company.com>
+Date: January 14, 2026
+
+Hi Alex,
+
+I wanted to follow up on our performance review conversation from yesterday with some written notes for your records.
+
+Overall: Excellent performance this quarter. You've really stepped up and shown great leadership on the mobile app rewrite.
+
+Strengths:
+- Technical skills continue to be top-notch. Your React Native architecture is solid.
+- Great mentor to junior developers. Sarah and Mike both mentioned how helpful you've been.
+- Excellent communication in standups and sprint planning.
+- Took initiative on the accessibility improvements without being asked.
+
+Areas for growth:
+- Sometimes you take on too much and then get overwhelmed. It's okay to push back or ask for help.
+- Code review turnaround time could be faster. Try to review PRs within 24 hours when possible.
+- Would love to see you present more in engineering all-hands meetings.
+
+For next quarter, let's focus on:
+- Leading the iOS migration project
+- Mentoring one junior dev more formally
+- Speaking at our engineering conference in March (if you're interested?)
+
+Rating: Exceeds Expectations
+Salary adjustment: 8% increase effective Feb 1
+Bonus: $5,000
+
+Let me know if you want to discuss anything. Really proud of your work!
+
+Rachel

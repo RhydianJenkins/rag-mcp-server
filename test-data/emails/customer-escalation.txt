@@ -1,0 +1,35 @@
+Subject: ESCALATED: Major Client Threatening to Churn
+From: Lisa Chen <lisa.chen@company.com>
+To: Engineering Leadership <eng-leads@company.com>
+Date: January 20, 2026
+
+Engineering Leadership,
+
+We have a serious situation with Acme Corp (our 3rd largest customer, $500K ARR). They're threatening to cancel their contract next month unless we fix critical performance issues.
+
+The Problem:
+Their dashboard is taking 30-45 seconds to load. It used to be under 5 seconds. This started happening after our Dec 15th deployment. They have ~50,000 users and the slowness is making their product unusable.
+
+What they're experiencing:
+- Dashboard queries timing out during peak hours (9am-5pm EST)
+- Report generation failing completely for datasets over 10K rows
+- Mobile app crashing when trying to sync data
+- Their customers are complaining to them, and they're complaining to us
+
+What we've tried:
+- Database indexes (helped a bit but not enough)
+- Increased server capacity (no improvement)
+- Rolled back to previous version (broke other features they need)
+
+What we need:
+- Senior backend engineer to investigate ASAP
+- Database expert to review query performance
+- DevOps to check infrastructure bottlenecks
+- Someone to be on a call with them tomorrow at 2 PM
+
+Their VP of Engineering said "If this isn't fixed by end of month, we're moving to CompetitorX." That's 12 days from now.
+
+This is all hands on deck territory. Can we get a war room set up today?
+
+Lisa Chen
+Customer Success Manager

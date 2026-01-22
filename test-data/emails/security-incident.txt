@@ -1,0 +1,33 @@
+Subject: URGENT: Security Incident - Action Required
+From: Security Team <security@company.com>
+To: All Engineering <eng-all@company.com>
+Date: January 18, 2026
+
+Team,
+
+We detected suspicious activity on our production systems at 3:47 AM this morning. While we don't believe any customer data was compromised, we're taking this very seriously and need everyone's cooperation.
+
+What happened:
+- Unusual API calls from an unrecognized IP address in Eastern Europe
+- Attempted access to our admin endpoints
+- Multiple failed authentication attempts followed by one successful login
+- The account used was a former contractor's that should have been deactivated
+
+What we've done:
+- Immediately locked down the affected account
+- Rotated all API keys and tokens
+- Enabled additional MFA requirements on admin accounts
+- Brought in our external security firm to conduct a full audit
+
+What you need to do:
+1. Change your password immediately (use the password reset link in the separate email)
+2. Review your recent commits for any accidentally committed secrets
+3. Check your local machines for any suspicious activity
+4. Report anything unusual to security@company.com
+
+We'll have a mandatory all-hands security training next week. Calendar invites will go out later today.
+
+I know this is disruptive, but security is our top priority. Please treat this with urgency.
+
+Marcus Webb
+Head of Security

@@ -1,0 +1,28 @@
+Subject: Re: PR #2847 - User Authentication Refactor
+From: David Park <david.park@company.com>
+To: Emma Rodriguez <emma.rodriguez@company.com>
+Date: January 17, 2026
+
+Emma,
+
+Left some comments on your PR. Overall the approach looks good but I have concerns about a few things:
+
+The Good:
+- Love the new token refresh logic, way cleaner than what we had
+- Tests are comprehensive, nice work on the edge cases
+- Documentation is actually readable for once :)
+
+Issues that need addressing:
+1. Line 234 in auth.service.ts - you're storing the JWT in localStorage which is vulnerable to XSS. We should use httpOnly cookies instead. I know it's more work but it's a security issue.
+
+2. The password hashing is using bcrypt with only 8 rounds. OWASP recommends at least 10, preferably 12. Yeah it's slower but security > performance for auth.
+
+3. You're not rate limiting the login endpoint. Someone could brute force this. We need to add rate limiting middleware.
+
+4. Error messages are too specific. "Incorrect password" vs "User not found" lets attackers enumerate valid usernames. Just return "Invalid credentials" for both.
+
+Also minor style thing - can you run the linter? There are some formatting inconsistencies.
+
+I hate to send it back but we can't merge this with the security issues. Should be quick fixes though. Ping me if you want to pair on it.
+
+David

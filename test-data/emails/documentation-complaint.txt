@@ -1,0 +1,30 @@
+Subject: Can we please fix the documentation?
+From: Jessica Williams <jessica.williams@company.com>
+To: Dev Team <dev@company.com>
+Date: January 19, 2026
+
+I'm sorry to be that person but I need to vent about our documentation situation because it's actively hurting productivity.
+
+I just spent 3 hours trying to figure out how to use the PaymentService class. Here's what I found:
+
+1. The README says "See docs/payments.md" - that file doesn't exist.
+2. The code comments say "TODO: document this" - from 2 years ago.
+3. The wiki page is from 2023 and references methods that no longer exist.
+4. Asked in Slack, got 3 different answers, all wrong.
+5. Finally just read the source code and figured it out myself.
+
+This is not sustainable. Every new hire goes through this same painful process. Every feature takes longer because we're reverse-engineering our own codebase.
+
+I get it - documentation is boring. Nobody wants to write it. But here's the thing: the 3 hours I wasted today could have been spent building features. Multiply that by every engineer, every week, and we're talking about serious lost productivity.
+
+Proposal:
+- Make documentation a requirement for PR approval (just like tests)
+- Spend one sprint doing a "documentation cleanup" where we just fix everything
+- Set up automated checks to warn when public APIs are undocumented
+- Maybe hire a technical writer?
+
+I know we're all busy but we need to solve this. Who's with me?
+
+Jessica
+
+P.S. - I'm going to start a shared doc where we can list all the undocumented stuff. Will share the link tomorrow.

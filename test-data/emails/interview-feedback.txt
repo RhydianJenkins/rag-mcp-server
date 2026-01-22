@@ -1,0 +1,33 @@
+Subject: Interview Feedback - Sarah Thompson (Senior Frontend)
+From: Mike Johnson <mike.johnson@company.com>
+To: Hiring Committee <hiring@company.com>
+Date: January 16, 2026
+
+Interview feedback for Sarah Thompson - Senior Frontend Engineer position
+
+Overall: Strong hire
+
+Technical Skills (9/10):
+Crushed the coding challenge. Implemented a complex React component with hooks, proper error handling, and even added loading states without being asked. Code was clean and well-organized. Knew her stuff on performance optimization - talked about React.memo, useMemo, code splitting, all the good stuff.
+
+System Design (7/10):
+Solid understanding of frontend architecture. Proposed a reasonable approach for the real-time dashboard problem. Could have gone deeper on caching strategies but overall good.
+
+Communication (10/10):
+Explained her thinking clearly. Asked great questions. Didn't just jump into coding, actually thought about requirements first. This is rarer than it should be.
+
+Culture Fit (8/10):
+Seems like she'd fit in well. Collaborative, humble, good sense of humor. Mentioned she's big on code reviews and documentation which we desperately need.
+
+Red Flags:
+None really. She's switching from a competitor but for good reasons (they're not doing remote work, we are).
+
+Concerns:
+- Salary expectations are at the top of our range ($140K)
+- She needs to give 4 weeks notice
+- Only 3 years experience (we wanted 5+ but she's clearly sharp)
+
+Recommendation: Hire
+She's the best candidate we've interviewed for this role. Let's move fast before someone else scoops her up.
+
+Mike

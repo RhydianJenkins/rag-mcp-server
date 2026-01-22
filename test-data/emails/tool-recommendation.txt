@@ -1,0 +1,32 @@
+Subject: Tool Recommendation - Linear vs Jira
+From: Kevin Martinez <kevin.martinez@company.com>
+To: Engineering Team <eng-team@company.com>
+Date: January 15, 2026
+
+Hey team,
+
+I've been researching alternatives to Jira because, let's be honest, everyone hates it. I spent the last two weeks testing Linear and I think we should seriously consider switching.
+
+Why Linear is better:
+- It's FAST. Like, shockingly fast. No more waiting 5 seconds for a page to load.
+- Keyboard shortcuts for everything. You can create, assign, and close tickets without touching your mouse.
+- Clean, minimal UI that doesn't make my eyes bleed.
+- Great GitHub integration. PRs automatically link to tickets.
+- Actually good mobile app (Jira's is a dumpster fire).
+- Their API doesn't make me want to cry.
+
+The downsides:
+- It costs $8/user/month (Jira is $7, so slightly more expensive).
+- Less customizable than Jira (but maybe that's a feature not a bug?).
+- No built-in time tracking (we'd need a separate tool).
+- Smaller ecosystem of integrations.
+
+Migration would be annoying but doable. Linear has Jira import tools and I tested it with a sample project - worked pretty well.
+
+I did a quick poll and 14 out of 18 engineers said they'd prefer Linear over Jira. The other 4 were indifferent.
+
+My recommendation: Let's do a one-month trial with the backend team. If they like it, we roll it out to everyone. If not, we stick with Jira.
+
+Thoughts?
+
+Kevin
