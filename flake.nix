@@ -10,12 +10,30 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
+        version = builtins.readFile ./VERSION;
       in
       {
-        packages.default = pkgs.writeShellScriptBin "start-services" ''
-          export PATH="${pkgs.lib.makeBinPath [ pkgs.qdrant pkgs.ollama pkgs.curl ]}:$PATH"
-          exec ${pkgs.process-compose}/bin/process-compose -f ${./process-compose.yaml}
-        '';
+        packages = {
+          seek = pkgs.buildGoModule {
+            pname = "seek";
+            inherit version;
+            src = ./.;
+            vendorHash = "sha256-Q7JcnsdRuHA0bUJ711UG4KqbrnUfWND+yY/PW/2x5Ig=";
+
+            meta = with pkgs.lib; {
+              description = "RAG MCP Server";
+              homepage = "https://github.com/rhydianjenkins/seek";
+              license = licenses.mit;
+            };
+          };
+
+          start-services = pkgs.writeShellScriptBin "start-services" ''
+            export PATH="${pkgs.lib.makeBinPath [ pkgs.qdrant pkgs.ollama pkgs.curl ]}:$PATH"
+            exec ${pkgs.process-compose}/bin/process-compose -f ${./process-compose.yaml}
+          '';
+
+          default = self.packages.${system}.seek;
+        };
 
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
