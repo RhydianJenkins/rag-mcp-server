@@ -1,4 +1,4 @@
-MCP Server for Retrieval-Augmented Generation (RAG).
+# MCP Server for Retrieval-Augmented Generation (RAG).
 
 Search through a given knowledge base for relevant information using embedded natural language.
 
