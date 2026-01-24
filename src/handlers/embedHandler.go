@@ -62,12 +62,10 @@ func readTextFiles(dataDir string) (map[string]string, error) {
 		var content string
 
 		switch ext {
-		case ".txt":
-			content = readers.ReadPlainText(path)
 		case ".pdf":
 			content = readers.ReadPDFFile(path)
 		default:
-			return nil
+			content = readers.ReadPlainText(path)
 		}
 
 		relPath, _ := filepath.Rel(dataDir, path)
@@ -99,8 +97,8 @@ func EmbedFilesWithProgress(dataDir string, chunkSize int, progressCallback Prog
 	if len(files) == 0 {
 		return &EmbedResult{
 			Success: false,
-			Error:   fmt.Sprintf("No .txt or .pdf files found in %s", dataDir),
-		}, fmt.Errorf("no .txt or .pdf files found in %s", dataDir)
+			Error:   fmt.Sprintf("No supported files found in %s", dataDir),
+		}, fmt.Errorf("no supported files found in %s", dataDir)
 	}
 
 	var points []*qdrant.PointStruct

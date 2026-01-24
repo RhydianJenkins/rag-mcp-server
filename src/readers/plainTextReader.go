@@ -3,6 +3,7 @@ package readers
 import (
 	"log"
 	"os"
+	"unicode/utf8"
 )
 
 func ReadPlainText(path string) string {
@@ -13,5 +14,11 @@ func ReadPlainText(path string) string {
 	}
 	content := string(bytes)
 
-	return content
+	if utf8.ValidString(content) {
+		return content
+	}
+
+
+	log.Println("Warning: invalid UTF-8 content in file", path)
+	return ""
 }
