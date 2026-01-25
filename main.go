@@ -8,6 +8,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/joho/godotenv"
 	"github.com/rhydianjenkins/seek/src/config"
 	"github.com/rhydianjenkins/seek/src/handlers"
 	"github.com/rhydianjenkins/seek/src/mcp"
@@ -22,8 +23,10 @@ func initCmd() *cobra.Command {
 	var (
 		ollamaHost     string
 		ollamaPort     int
+		ollamaAPIKey   string
 		qdrantHost     string
 		qdrantPort     int
+		qdrantAPIKey   string
 		collectionName string
 	)
 
@@ -34,8 +37,10 @@ func initCmd() *cobra.Command {
 			config.Initialize(&config.Config{
 				CollectionName: collectionName,
 				OllamaURL:      ollamaURL,
+				OllamaAPIKey:   ollamaAPIKey,
 				QdrantHost:     qdrantHost,
 				QdrantPort:     qdrantPort,
+				QdrantAPIKey:   qdrantAPIKey,
 				ServerVersion:  strings.TrimSpace(version),
 			})
 		},
@@ -46,8 +51,10 @@ func initCmd() *cobra.Command {
 
 	rootCmd.PersistentFlags().StringVar(&ollamaHost, "ollamaHost", "localhost", "Ollama server host")
 	rootCmd.PersistentFlags().IntVar(&ollamaPort, "ollamaPort", 11434, "Ollama server port")
+	rootCmd.PersistentFlags().StringVar(&ollamaAPIKey, "ollamaApiKey", "", "Ollama API key (or use OLLAMA_API_KEY env var)")
 	rootCmd.PersistentFlags().StringVar(&qdrantHost, "qdrantHost", "localhost", "Qdrant server host")
 	rootCmd.PersistentFlags().IntVar(&qdrantPort, "qdrantPort", 6334, "Qdrant server port")
+	rootCmd.PersistentFlags().StringVar(&qdrantAPIKey, "qdrantApiKey", "", "Qdrant API key (or use QDRANT_API_KEY env var)")
 	rootCmd.PersistentFlags().StringVar(&collectionName, "collection", "my_collection", "Qdrant collection name")
 
 	var dataDir string
@@ -151,5 +158,8 @@ func initCmd() *cobra.Command {
 }
 
 func main() {
+	// Load .env file if it exists (silently ignore if not found)
+	_ = godotenv.Load()
+
 	initCmd().Execute()
 }
