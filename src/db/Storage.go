@@ -203,26 +203,47 @@ func (storage *Storage) GetDocumentByFilename(filename string) ([]*qdrant.Scored
 	return scoredPoints, nil
 }
 
-func (storage *Storage) ListDocuments() ([]string, error) {
-	scrollResult, err := storage.client.Scroll(
-		context.Background(),
-		&qdrant.ScrollPoints{
-			CollectionName: storage.collectionName,
-			WithPayload:    qdrant.NewWithPayload(true),
-			Limit:          qdrant.PtrOf(uint32(10000)),
-		},
-	)
-
-	if err != nil {
-		return nil, fmt.Errorf("failed to scroll documents: %w", err)
-	}
-
+func (storage *Storage) ListDocuments(limit int) ([]string, error) {
 	filenameMap := make(map[string]bool)
-	for _, point := range scrollResult {
-		if point.Payload != nil {
-			if filename, ok := point.Payload["filename"]; ok {
-				filenameMap[filename.GetStringValue()] = true
+	var offset *qdrant.PointId
+	pageSize := uint32(10000) // Scan in batches of 10k points
+
+	for len(filenameMap) < limit {
+		scrollResult, err := storage.client.Scroll(
+			context.Background(),
+			&qdrant.ScrollPoints{
+				CollectionName: storage.collectionName,
+				WithPayload:    qdrant.NewWithPayload(true),
+				Limit:          qdrant.PtrOf(pageSize),
+				Offset:         offset,
+			},
+		)
+
+		if err != nil {
+			return nil, fmt.Errorf("failed to scroll documents: %w", err)
+		}
+
+		if len(scrollResult) == 0 {
+			break
+		}
+
+		for _, point := range scrollResult {
+			if point.Payload != nil {
+				if filename, ok := point.Payload["filename"]; ok {
+					filenameMap[filename.GetStringValue()] = true
+					if len(filenameMap) >= limit {
+						break
+					}
+				}
 			}
+		}
+
+		if len(scrollResult) < int(pageSize) {
+			break
+		}
+
+		if len(scrollResult) > 0 {
+			offset = scrollResult[len(scrollResult)-1].Id
 		}
 	}
 

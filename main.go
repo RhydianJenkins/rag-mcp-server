@@ -99,14 +99,16 @@ func initCmd() *cobra.Command {
 	}
 	rootCmd.AddCommand(statusCmd)
 
+	var listLimit int
 	var listCmd = &cobra.Command{
 		Use:   "list",
 		Short: "List all document names in the database",
 		Args:  cobra.ExactArgs(0),
 		Run: func(cmd *cobra.Command, args []string) {
-			handlers.List()
+			handlers.List(listLimit)
 		},
 	}
+	listCmd.Flags().IntVar(&listLimit, "limit", 100, "Maximum number of documents to scan")
 	rootCmd.AddCommand(listCmd)
 
 	var versionCmd = &cobra.Command{
