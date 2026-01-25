@@ -10,6 +10,12 @@ This is an early prototype and breaking changes are likely.
 - **Document Management**: Index and retrieve complete documents from your knowledge base
 - **MCP Integration**: Full Model Context Protocol support for integration with MCP clients
 
+## Supported File Formats
+
+- **Plain Text** - `.txt`, `.md`, and other text-based files
+- **PDF** - `.pdf` documents with text extraction
+- **Excel** - `.xlsx` spreadsheets (all sheets and cells)
+
 # Getting Started
 
 <details>
