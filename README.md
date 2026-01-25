@@ -135,5 +135,4 @@ Configure the server using command-line flags:
 - [ ] Backup/restore support
 - [ ] Add auth/TLS support
 - [ ] Better file parsing (.docx, .pptx, .xlsx, etc.)
-- [ ] Allow embedding model to be specified (currently hardcoded to `nomic-embed-text`)
 - [ ] Image/OCR support
