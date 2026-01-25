@@ -8,7 +8,7 @@ import (
 	"github.com/rhydianjenkins/seek/src/db"
 )
 
-func List() {
+func List(limit int) {
 	storage, err := db.Connect()
 	if err != nil {
 		log.Fatalf("Failed to connect to storage: %v", err)
@@ -23,7 +23,7 @@ func List() {
 		return
 	}
 
-	filenames, err := storage.ListDocuments()
+	filenames, err := storage.ListDocuments(limit)
 	if err != nil {
 		log.Fatalf("Failed to list documents: %v", err)
 	}
