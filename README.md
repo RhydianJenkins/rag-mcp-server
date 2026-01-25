@@ -132,5 +132,5 @@ Configure the server using command-line flags:
 ## TODO
 
 - [ ] Add auth/TLS support
-- [ ] Better file parsing (.docx, .pptx, .xlsx, etc.)
+- [ ] Better file parsing (.docx, .pptx, etc.)
 - [ ] Image/OCR support
