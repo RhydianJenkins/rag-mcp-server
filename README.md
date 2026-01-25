@@ -131,7 +131,6 @@ Configure the server using command-line flags:
 
 ## TODO
 
-- [ ] Incremental updates - you lose everything each time you re-embed
 - [ ] Backup/restore support
 - [ ] Add auth/TLS support
 - [ ] Better file parsing (.docx, .pptx, .xlsx, etc.)
