@@ -84,9 +84,6 @@
 
           shellHook = ''
             echo "RAG MCP Server development environment"
-            echo "Go version: $(go version)"
-            echo "Qdrant version: $(qdrant --version)"
-            echo "Ollama version: $(ollama --version)"
             echo ""
             echo "Services:"
             echo "  nix run .#qdrant - Start Qdrant vector database"
