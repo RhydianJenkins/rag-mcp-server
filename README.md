@@ -48,6 +48,8 @@ seek --ollamaHost your.ollama.host \
     [command]
 ```
 
+**Note:** If you have a `.env` file, process-compose will automatically load it and pass the API keys to Ollama and Qdrant.
+
 </details>
 
 <details>
@@ -123,17 +125,62 @@ When running as an MCP server, the following tools are available:
 
 Configure the server using command-line flags:
 
+### Basic Configuration
 - `--ollamaHost` - Ollama server host (default: localhost)
 - `--ollamaPort` - Ollama server port (default: 11434)
 - `--qdrantHost` - Qdrant server host (default: localhost)
 - `--qdrantPort` - Qdrant server port (default: 6334)
 - `--collection` - Qdrant collection name (default: my_collection)
 
+### Authentication
+
+Both Ollama and Qdrant support API key authentication. You can configure these via command-line flags or environment variables.
+
+#### Using Environment Variables
+
+Copy `.env.example` to `.env` and configure:
+
+```sh
+cp .env.example .env
+# Edit .env with your API keys
+```
+
+The `.env` file will be automatically loaded when you run `seek`:
+
+```sh
+seek search "your query"
+```
+
+If you're using `process-compose` to run Ollama and Qdrant locally, the `.env` file is also automatically loaded and the API keys are passed to both services.
+
+#### Using Command-Line Flags
+
+```sh
+# Connect to Qdrant Cloud with API key
+seek search "your query" \
+  --qdrantHost xyz-example.aws.cloud.qdrant.io \
+  --qdrantPort 6333 \
+  --qdrantApiKey "your-qdrant-api-key"
+
+# Connect to authenticated Ollama
+seek search "your query" \
+  --ollamaHost your-ollama.example.com \
+  --ollamaPort 11434 \
+  --ollamaApiKey "your-ollama-key"
+```
+
+All flags can be combined:
+```sh
+seek embed --dataDir ./docs \
+  --qdrantHost cloud.qdrant.io \
+  --qdrantApiKey "xyz123" \
+  --ollamaApiKey "abc456"
+```
+
 ## TODO
 
 - [ ] Incremental updates - you lose everything each time you re-embed
 - [ ] Backup/restore support
-- [ ] Add auth/TLS support
 - [ ] Better file parsing (.docx, .pptx, .xlsx, etc.)
 - [ ] Allow embedding model to be specified (currently hardcoded to `nomic-embed-text`)
 - [ ] Image/OCR support

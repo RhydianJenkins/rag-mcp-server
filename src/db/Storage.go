@@ -16,12 +16,16 @@ import (
 func Connect() (*Storage, error) {
 	cfg := config.Get()
 
-	client, err := qdrant.NewClient(&qdrant.Config{
-		Host:   cfg.QdrantHost,
-		Port:   cfg.QdrantPort,
-		UseTLS: cfg.QdrantUseTLS,
-	})
+	qdrantConfig := &qdrant.Config{
+		Host: cfg.QdrantHost,
+		Port: cfg.QdrantPort,
+	}
 
+	if cfg.QdrantAPIKey != "" {
+		qdrantConfig.APIKey = cfg.QdrantAPIKey
+	}
+
+	client, err := qdrant.NewClient(qdrantConfig)
 	if err != nil {
 		return nil, err
 	}
@@ -32,6 +36,7 @@ func Connect() (*Storage, error) {
 		ollamaURL:      cfg.OllamaURL,
 		vectorSize:     cfg.VectorSize,
 		embeddingModel: cfg.EmbeddingModel,
+		httpClient:     &http.Client{},
 	}
 
 	return storage, nil
@@ -48,11 +53,20 @@ func (storage *Storage) GetEmbedding(text string) ([]float32, error) {
 		return nil, fmt.Errorf("failed to marshal request: %w", err)
 	}
 
-	resp, err := http.Post(
-		storage.ollamaURL+"/api/embeddings",
-		"application/json",
-		bytes.NewBuffer(jsonData),
-	)
+	req, err := http.NewRequest("POST", storage.ollamaURL+"/api/embeddings", bytes.NewBuffer(jsonData))
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %w", err)
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+
+	// Add API key header if configured
+	cfg := config.Get()
+	if cfg.OllamaAPIKey != "" {
+		req.Header.Set("Authorization", "Bearer "+cfg.OllamaAPIKey)
+	}
+
+	resp, err := storage.httpClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to call Ollama API: %w", err)
 	}

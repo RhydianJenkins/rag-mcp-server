@@ -1,6 +1,10 @@
 package db
 
-import "github.com/qdrant/go-client/qdrant"
+import (
+	"net/http"
+
+	"github.com/qdrant/go-client/qdrant"
+)
 
 type Storage struct {
 	client         *qdrant.Client
@@ -8,6 +12,7 @@ type Storage struct {
 	ollamaURL      string
 	vectorSize     uint64
 	embeddingModel string
+	httpClient     *http.Client
 }
 
 type ollamaEmbedRequest struct {
