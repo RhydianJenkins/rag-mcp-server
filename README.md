@@ -139,5 +139,5 @@ Configure the server using command-line flags:
 ## TODO
 
 - [ ] Add auth/TLS support
-- [ ] Better file parsing (.pptx, etc.)
 - [ ] Image/OCR support
+- [ ] URL webpage crawling (and not the annoying kind!)
