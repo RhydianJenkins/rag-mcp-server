@@ -100,8 +100,6 @@ docker run --rm \
   ghcr.io/rhydianjenkins/seek:latest --help
 ```
 
-Note: Use `host.docker.internal` on Mac/Windows or `172.17.0.1` on Linux to connect to services running on the host.
-
 </details>
 
 ## Commands
