@@ -68,16 +68,10 @@ Make sure `$GOPATH/bin` (usually `~/go/bin`) is in your PATH.
 <details>
 <summary>Use with Docker</summary>
 
-Build the Docker image using Nix (requires Nix with flakes enabled):
+Pull the Docker image:
 ```sh
-# Build the Docker image
-nix build .#docker
-
-# Load it into Docker
-docker load < result
+docker pull ghcr.io/rhydianjenkins/seek:latest
 ```
-
-This creates a `seek` image tagged with the version from the VERSION file (e.g., `seek:1.0.0`).
 
 Run the required services and seek:
 ```sh
@@ -96,29 +90,17 @@ docker run -d --name ollama \
 # Pull the embedding model
 docker exec ollama ollama pull nomic-embed-text
 
-# Run seek (adjust tag to match your version)
+# Run seek
 docker run --rm \
   -e QDRANT_HOST=host.docker.internal \
   -e QDRANT_PORT=6333 \
   -e OLLAMA_HOST=host.docker.internal \
   -e OLLAMA_PORT=11434 \
   -v $(pwd)/data:/data \
-  seek:1.0.0 --help
+  ghcr.io/rhydianjenkins/seek:latest --help
 ```
 
 Note: Use `host.docker.internal` on Mac/Windows or `172.17.0.1` on Linux to connect to services running on the host.
-
-</details>
-
-<details>
-<summary>Build from Source</summary>
-
-```sh
-git clone git@github.com:rhydianjenkins/seek
-cd seek
-go build
-./seek --help
-```
 
 </details>
 
@@ -165,6 +147,55 @@ When running as an MCP server, the following tools are available:
 - `embed` - Generate embeddings for documents in a directory
 - `get_document` - Retrieve a full document by filename
 - `status` - Get database status and statistics
+
+## Development
+
+### Build from Source
+
+```sh
+git clone git@github.com:rhydianjenkins/seek
+cd seek
+go build
+./seek --help
+```
+
+### Build Docker Image with Nix
+
+Build the Docker image using Nix (requires Nix with flakes enabled):
+```sh
+# Build the Docker image
+nix build .#docker
+
+# Load it into Docker
+docker load < result
+```
+
+This creates a `seek` image tagged with the version from the VERSION file (e.g., `seek:1.0.0`).
+
+### Publishing Docker Images (Maintainers)
+
+To publish a new version to GitHub Container Registry:
+
+```sh
+# Build the image with Nix
+nix build .#docker
+
+# Load it into Docker
+docker load < result
+
+# Tag for GitHub Container Registry
+docker tag seek:1.0.0 ghcr.io/rhydianjenkins/seek:1.0.0
+docker tag seek:1.0.0 ghcr.io/rhydianjenkins/seek:latest
+
+# Login to GitHub Container Registry (requires a PAT with write:packages scope)
+echo $GITHUB_TOKEN | docker login ghcr.io -u rhydianjenkins --password-stdin
+
+# Push both tags
+docker push ghcr.io/rhydianjenkins/seek:1.0.0
+docker push ghcr.io/rhydianjenkins/seek:latest
+```
+
+Make sure the repository visibility is set to public in GitHub Container Registry settings.
 
 ## TODO
 
