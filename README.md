@@ -146,31 +146,7 @@ When running as an MCP server, the following tools are available:
 - `get_document` - Retrieve a full document by filename
 - `status` - Get database status and statistics
 
-## Development
-
-### Build from Source
-
-```sh
-git clone git@github.com:rhydianjenkins/seek
-cd seek
-go build
-./seek --help
-```
-
-### Build Docker Image with Nix
-
-Build the Docker image using Nix (requires Nix with flakes enabled):
-```sh
-# Build the Docker image
-nix build .#docker
-
-# Load it into Docker
-docker load < result
-```
-
-This creates a `seek` image tagged with the version from the VERSION file (e.g., `seek:1.0.0`).
-
-### Publishing Docker Images (Maintainers)
+# Publishing Docker Images (Maintainers)
 
 To publish a new version to GitHub Container Registry:
 
