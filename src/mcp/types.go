@@ -5,7 +5,7 @@ import (
 	"github.com/rhydianjenkins/seek/src/db"
 )
 
-type RAGServer struct {
+type MCPServer struct {
 	mcpServer *mcp.Server
 	storage   *db.Storage
 }

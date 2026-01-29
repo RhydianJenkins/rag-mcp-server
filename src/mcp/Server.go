@@ -11,7 +11,7 @@ import (
 	"github.com/rhydianjenkins/seek/src/handlers"
 )
 
-func NewRAGServer() (*RAGServer, error) {
+func NewRAGServer() (*MCPServer, error) {
 	cfg := config.Get()
 	if cfg == nil {
 		return nil, fmt.Errorf("config not initialized: call config.Initialize() before creating server")
@@ -27,7 +27,7 @@ func NewRAGServer() (*RAGServer, error) {
 		Version: cfg.ServerVersion,
 	}, nil)
 
-	ragServer := &RAGServer{
+	ragServer := &MCPServer{
 		mcpServer: mcpServer,
 		storage:   storage,
 	}
@@ -37,7 +37,7 @@ func NewRAGServer() (*RAGServer, error) {
 	return ragServer, nil
 }
 
-func (rs *RAGServer) registerTools() {
+func (rs *MCPServer) registerTools() {
 	mcp.AddTool(
 		rs.mcpServer,
 		&mcp.Tool{
@@ -75,7 +75,7 @@ func (rs *RAGServer) registerTools() {
 	)
 }
 
-func (rs *RAGServer) handleSearchTool(
+func (rs *MCPServer) handleSearchTool(
 	ctx context.Context,
 	req *mcp.CallToolRequest,
 	input SearchToolInput,
@@ -101,7 +101,7 @@ func (rs *RAGServer) handleSearchTool(
 	}, results, nil
 }
 
-func (rs *RAGServer) handleEmbedTool(
+func (rs *MCPServer) handleEmbedTool(
 	ctx context.Context,
 	req *mcp.CallToolRequest,
 	input EmbedToolInput,
@@ -127,7 +127,7 @@ func (rs *RAGServer) handleEmbedTool(
 	}, results, nil
 }
 
-func (rs *RAGServer) handleStatusTool(
+func (rs *MCPServer) handleStatusTool(
 	ctx context.Context,
 	req *mcp.CallToolRequest,
 	input StatusToolInput,
@@ -149,7 +149,7 @@ func (rs *RAGServer) handleStatusTool(
 	}, status, nil
 }
 
-func (rs *RAGServer) handleGetDocumentTool(
+func (rs *MCPServer) handleGetDocumentTool(
 	ctx context.Context,
 	req *mcp.CallToolRequest,
 	input GetDocumentToolInput,
@@ -169,14 +169,4 @@ func (rs *RAGServer) handleGetDocumentTool(
 	return &mcp.CallToolResult{
 		IsError: false,
 	}, result, nil
-}
-
-func (rs *RAGServer) Run(ctx context.Context) error {
-	log.Println("Starting RAG MCP server on stdio transport...")
-
-	if err := rs.mcpServer.Run(ctx, &mcp.StdioTransport{}); err != nil {
-		return err
-	}
-
-	return nil
 }

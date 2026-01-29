@@ -1,11 +1,8 @@
 package main
 
 import (
-	"context"
 	_ "embed"
 	"fmt"
-	"log"
-	"os"
 	"strings"
 
 	"github.com/joho/godotenv"
@@ -103,31 +100,7 @@ func initCmd() *cobra.Command {
 	}
 	rootCmd.AddCommand(versionCmd)
 
-	var mcpCmd = &cobra.Command{
-		Use:   "mcp",
-		Short: "Run the MCP server over stdio",
-		Long:  "Starts the MCP server using stdio transport for integration with MCP clients",
-		Args:  cobra.ExactArgs(0),
-		Run: func(cmd *cobra.Command, args []string) {
-			logFile, err := os.OpenFile(logfile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-			if err != nil {
-				log.Fatalf("Failed to open log file: %v", err)
-			}
-			defer logFile.Close()
-			log.SetOutput(logFile)
-
-			ragServer, err := mcp.NewRAGServer()
-			if err != nil {
-				log.Fatalf("Failed to create RAG server: %v", err)
-			}
-
-			ctx := context.Background()
-			if err := ragServer.Run(ctx); err != nil {
-				log.Fatalf("MCP server error: %v", err)
-			}
-		},
-	}
-	rootCmd.AddCommand(mcpCmd)
+	rootCmd.AddCommand(mcp.NewCommand(logfile))
 
 	return rootCmd
 }
