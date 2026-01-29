@@ -33,7 +33,8 @@ func NewCommand(logfile string) *cobra.Command {
 				log.Fatalf("Failed to create RAG server: %v", err)
 			}
 
-			ctx := context.Background()
+			ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+			defer stop()
 			if httpMode {
 				if err := ragServer.RunHTTP(ctx, httpPort); err != nil {
 					log.Fatalf("MCP server error: %v", err)
